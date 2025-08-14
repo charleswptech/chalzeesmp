@@ -1,589 +1,1186 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
   <meta charset="utf-8" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>ChalzeeSMP — Survival • PvP • Community</title>
+
   <meta name="description" content="ChalzeeSMP — a cozy but competitive Minecraft SMP with seasons, economy, claims, events and high‑octane PvP. Join today on chalzeesmp.net!" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
+
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- 
+
+
+
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+
   <style>
+
     :root{
+
       --bg-0:#0a0b10;
+
       --bg-1:#0e1220;
+
       --card:#12172b;
+
       --card-2:#0f1430;
+
       --text:#e9f0ff;
+
       --muted:#a6b0d6;
+
       --brand:#00e6ff;
+
       --brand-2:#ff2bd6;
+
       --accent:#78ffb7;
+
       --warn:#ffd166;
+
       --danger:#ff6b6b;
+
       --shadow: 0 8px 30px rgba(0,0,0,.45);
+
       --radius:16px;
+
       --radius-sm:12px;
+
       --glow-brand:0 0 25px rgba(0,230,255,.55), 0 0 60px rgba(0,230,255,.25);
+
       --glow-pink:0 0 25px rgba(255,43,214,.55), 0 0 60px rgba(255,43,214,.25);
+
       --glass: rgba(18, 23, 43, .65);
+
       --glass-border: 1px solid rgba(255,255,255,.08);
+
     }
+
     *{box-sizing:border-box}
+
     html,body{height:100%}
+
     body{
+
       margin:0;
+
       background:
+
         radial-gradient(1200px 600px at 10% -10%, rgba(0,230,255,.06), transparent 60%),
+
         radial-gradient(1000px 600px at 110% 10%, rgba(255,43,214,.06), transparent 60%),
+
         linear-gradient(180deg, var(--bg-0), var(--bg-1) 40%, #070a16 100%);
+
       color:var(--text);
+
       font-family: "Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
       line-height:1.6;
+
       overflow-x:hidden;
+
     }
+
     a{color:var(--brand); text-decoration:none}
+
     a:hover{opacity:.9; text-decoration:underline}
+
     .container{width:min(1200px, 92%); margin-inline:auto}
 
-  
+
+
+
+
     header{
+
       position:sticky; top:0; z-index:50;
+
       backdrop-filter:saturate(160%) blur(12px);
+
       background:linear-gradient(180deg, rgba(10,12,20,.95), rgba(10,12,20,.65));
+
       border-bottom:1px solid rgba(255,255,255,.06);
-    }
-    .nav{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 0;
-    }
-    .brand{
-      display:flex; align-items:center; gap:14px; letter-spacing:.5px;
-      text-transform:uppercase; font-weight:800;
-    }
-    .brand-logo{
-      width:40px; height:40px; border-radius:10px;
-      background: conic-gradient(from 180deg, var(--brand), var(--brand-2), var(--accent), var(--brand));
-      box-shadow: var(--glow-brand);
-    }
-    .navlinks{display:flex; gap:20px; align-items:center}
-    .btn, button{
-      appearance:none; border:none; cursor:pointer;
-      padding:14px 18px; border-radius:14px;
-      background:linear-gradient(135deg, var(--brand), var(--brand-2));
-      color:#001014; font-weight:800; letter-spacing:.3px;
-      box-shadow: var(--glow-brand); transition:.2s transform ease, .2s filter ease;
-    }
-    .btn:hover{transform:translateY(-2px)}
-    .btn.secondary{
-      background: linear-gradient(135deg, #1a203a, #0e142a); color:var(--text);
-      border:1px solid rgba(255,255,255,.08); box-shadow: var(--shadow);
+
     }
 
-    
+    .nav{
+
+      display:flex; align-items:center; justify-content:space-between;
+
+      padding:14px 0;
+
+    }
+
+    .brand{
+
+      display:flex; align-items:center; gap:14px; letter-spacing:.5px;
+
+      text-transform:uppercase; font-weight:800;
+
+    }
+
+    .brand-logo{
+
+      width:40px; height:40px; border-radius:10px;
+
+      background: conic-gradient(from 180deg, var(--brand), var(--brand-2), var(--accent), var(--brand));
+
+      box-shadow: var(--glow-brand);
+
+    }
+
+    .navlinks{display:flex; gap:20px; align-items:center}
+
+    .btn, button{
+
+      appearance:none; border:none; cursor:pointer;
+
+      padding:14px 18px; border-radius:14px;
+
+      background:linear-gradient(135deg, var(--brand), var(--brand-2));
+
+      color:#001014; font-weight:800; letter-spacing:.3px;
+
+      box-shadow: var(--glow-brand); transition:.2s transform ease, .2s filter ease;
+
+    }
+
+    .btn:hover{transform:translateY(-2px)}
+
+    .btn.secondary{
+
+      background: linear-gradient(135deg, #1a203a, #0e142a); color:var(--text);
+
+      border:1px solid rgba(255,255,255,.08); box-shadow: var(--shadow);
+
+    }
+
+
+
+
+
     .hero{
+
       position:relative; isolation:isolate;
+
       padding: clamp(64px, 9vw, 120px) 0 80px;
+
       overflow:hidden;
+
     }
+
     canvas#particles{
+
       position:absolute; inset:0; width:100%; height:110%;
+
       z-index:-1; opacity:.65;
+
     }
+
     .hero-grid{
+
       display:grid; gap:28px; grid-template-columns: 1.1fr .9fr; align-items:center;
+
     }
+
     .badge{
+
       display:inline-flex; align-items:center; gap:8px; padding:8px 12px;
+
       border-radius:999px; background: rgba(0,230,255,.08);
+
       border:1px solid rgba(0,230,255,.25); box-shadow: var(--glow-brand);
+
       color:#bbf6ff; font-weight:700; font-size:.9rem;
+
     }
+
     .title{
+
       font-family:"Press Start 2P", monospace; line-height:1.25;
+
       font-size: clamp(30px, 4.2vw, 56px);
+
       text-shadow: 0 4px 16px rgba(0,0,0,.45);
+
     }
+
     .title span{
+
       background: linear-gradient(135deg, var(--brand), var(--brand-2));
+
       -webkit-background-clip:text; background-clip:text; color:transparent;
+
       filter: drop-shadow(0 0 14px rgba(0,230,255,.3));
+
     }
+
     .lede{color:var(--muted); font-size:clamp(1rem, 1.25vw, 1.15rem); margin:14px 0 20px}
+
     .ipbox{
+
       display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+
       background:var(--glass); border:var(--glass-border); border-radius:14px; padding:10px;
+
     }
+
     .ip{
+
       padding:12px 14px; border-radius:10px; background:#0a0f22; border:1px solid rgba(255,255,255,.05);
+
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
       color:#baf8ff;
+
     }
+
     .hero-card{
+
       background: radial-gradient(120% 160% at 110% -10%, rgba(255,43,214,.09), transparent 40%), var(--glass);
+
       border:var(--glass-border); border-radius: var(--radius); padding:18px;
+
       box-shadow: var(--shadow);
+
     }
+
     .statgrid{display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; margin-top:12px}
+
     .stat{
+
       background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00));
+
       border:1px solid rgba(255,255,255,.06); border-radius:12px; padding:12px;
+
       text-align:center;
+
     }
+
     .stat .k{font-size:1.2rem; font-weight:800}
+
     .stat .l{font-size:.8rem; color:var(--muted)}
 
-    
+
+
+
+
     section{padding:80px 0}
+
     .section-title{
+
       font-weight:900; letter-spacing:.6px; font-size:clamp(22px, 2.5vw, 34px);
+
       margin-bottom: 16px;
+
     }
+
     .section-sub{color:var(--muted); margin-bottom: 24px}
 
-   
+
+
+
+
     .features{
+
       display:grid; grid-template-columns: repeat(3, 1fr); gap:18px;
+
     }
+
     .card{
+
       background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.00));
+
       border:1px solid rgba(255,255,255,.08);
+
       border-radius: var(--radius-sm); padding:18px;
+
       transition:.25s transform ease, .25s box-shadow ease, .25s border-color ease;
+
     }
+
     .card:hover{
+
       transform: translateY(-4px);
+
       border-color: rgba(0,230,255,.35);
+
       box-shadow: var(--glow-brand);
+
     }
+
     .ic{
+
       width:42px; height:42px; border-radius:12px; display:grid; place-items:center; margin-bottom:10px;
+
       background:linear-gradient(135deg, var(--brand), var(--brand-2));
+
       box-shadow: var(--glow-brand);
+
     }
+
     .card h3{margin:4px 0 6px}
+
     .card p{color:var(--muted); margin:0}
 
-   
+
+
+
+
     .cta{
+
       display:grid; grid-template-columns: 1.1fr .9fr; gap:22px; align-items:center;
+
       background: linear-gradient(115deg, rgba(0,230,255,.08), rgba(255,43,214,.08));
+
       padding:20px; border-radius: var(--radius); border:1px solid rgba(255,255,255,.08);
+
     }
+
     .cta-media{
+
       aspect-ratio: 16 / 9; border-radius:14px; overflow:hidden; border:1px solid rgba(255,255,255,.08);
+
       background:radial-gradient(150% 120% at 50% 0%, rgba(0,230,255,.18), transparent 45%), #0b0f1f;
+
       position:relative;
+
     }
+
     .cta-media::after{
+
       content:""; position:absolute; inset:0; pointer-events:none;
+
       background: linear-gradient(180deg, rgba(255,255,255,.06), transparent 22%, transparent 78%, rgba(255,255,255,.06) 100%);
+
       mix-blend:overlay;
+
     }
+
     video{width:100%; height:100%; object-fit:cover}
 
-    
+
+
+
+
     .statusbar{
+
       display:flex; gap:12px; align-items:center; flex-wrap:wrap;
+
       background:var(--card); border:1px solid rgba(255,255,255,.08);
+
       border-radius:var(--radius-sm); padding:12px; margin-top:12px;
+
     }
+
     .dot{width:10px; height:10px; border-radius:50%;}
+
     .up{background:#2ee9a8; box-shadow: 0 0 18px rgba(46,233,168,.7)}
+
     .down{background:#ff6b6b; box-shadow: 0 0 18px rgba(255,107,107,.7)}
+
     .pill{
+
       padding:6px 10px; border-radius:999px; background:#0c1230; border:1px solid rgba(255,255,255,.08);
+
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
       color:#cfe4ff;
+
     }
 
-   
+
+
+
+
     .gallery{
+
       display:grid; grid-template-columns: repeat(4, 1fr); gap:12px;
-    }
-    .shot{
-      aspect-ratio: 16/10; border-radius:12px; overflow:hidden; position:relative;
-      border:1px solid rgba(255,255,255,.06); background:#0b0f1f;
-    }
-    .shot img{width:100%; height:100%; object-fit:cover; filter: saturate(1.1) contrast(1.05)}
-    .shot span{
-      position:absolute; left:8px; bottom:8px; font-size:.8rem; color:#d7e7ff;
-      background:rgba(0,0,0,.45); padding:4px 8px; border-radius:8px; border:1px solid rgba(255,255,255,.12);
-      backdrop-filter: blur(4px);
+
     }
 
-  
-    .faq{display:grid; grid-template-columns: 1fr 1fr; gap:14px}
-    details{
-      background:var(--card-2); border:1px solid rgba(255,255,255,.08);
-      border-radius:12px; padding:14px 16px;
+    .shot{
+
+      aspect-ratio: 16/10; border-radius:12px; overflow:hidden; position:relative;
+
+      border:1px solid rgba(255,255,255,.06); background:#0b0f1f;
+
     }
+
+    .shot img{width:100%; height:100%; object-fit:cover; filter: saturate(1.1) contrast(1.05)}
+
+    .shot span{
+
+      position:absolute; left:8px; bottom:8px; font-size:.8rem; color:#d7e7ff;
+
+      background:rgba(0,0,0,.45); padding:4px 8px; border-radius:8px; border:1px solid rgba(255,255,255,.12);
+
+      backdrop-filter: blur(4px);
+
+    }
+
+
+
+
+
+    .faq{display:grid; grid-template-columns: 1fr 1fr; gap:14px}
+
+    details{
+
+      background:var(--card-2); border:1px solid rgba(255,255,255,.08);
+
+      border-radius:12px; padding:14px 16px;
+
+    }
+
     summary{cursor:pointer; font-weight:700}
+
     details p{color:var(--muted); margin:8px 0 0}
 
+
+
     footer{
+
       margin-top:60px; padding:24px 0 60px;
+
       border-top:1px solid rgba(255,255,255,.06);
+
       color:#b8c6ff;
+
     }
+
     .footgrid{display:grid; grid-template-columns: 1.2fr .8fr; gap:16px}
+
     .links{display:flex; gap:12px; flex-wrap:wrap}
+
     .chip{
+
       padding:8px 12px; border-radius:999px; background:#0b1130; border:1px solid rgba(255,255,255,.08);
+
     }
+
+
 
     @media (max-width: 1000px){
+
       .hero-grid, .cta, .faq{grid-template-columns: 1fr}
+
       .features{grid-template-columns: 1fr 1fr}
+
     }
+
     @media (max-width: 680px){
+
       .features{grid-template-columns: 1fr}
+
       .gallery{grid-template-columns: 1fr 1fr}
+
       .statgrid{grid-template-columns: 1fr 1fr 1fr}
+
       .navlinks{display:none}
+
     }
+
   </style>
+
 </head>
+
 <body>
 
+
+
   <header>
+
     <div class="container nav">
+
       <div class="brand">
+
         <div class="brand-logo" aria-hidden="true"></div>
+
         <div>
+
           <div style="font-weight:900; letter-spacing:1px;">Chalzee<span style="color:var(--brand)">SMP</span></div>
+
           <div style="font-size:.8rem; color:var(--muted)">Survival • PvP • Community</div>
+
         </div>
+
       </div>
+
      <nav class="navlinks">
+
   <a href="#about">About</a>
+
   <a href="#features">Features</a>
+
   <a href="#news">News</a>
+
   <a href="#join">Join</a>
+
   <a href="#faq">FAQ</a>
+
   <a href="rules.html">Rules</a>
+
   <a href="discord.chalzeesmp.net">Discord</a>
+
   <a class="btn" href="#join">Play Now</a>
+
 </nav>
 
+
+
     </div>
+
   </header>
 
 
+
+
+
   <section class="hero">
+
     <canvas id="particles" aria-hidden="true"></canvas>
+
     <div class="container hero-grid">
+
       <div>
+
         <span class="badge">Season 1  -  New lobby  -  Auction House</span>
+
         <h1 class="title" style="margin:14px 0 10px">
+
           Welcome to <span>ChalzeeSMP</span>
+
         </h1>
 
 
+
+
+
         <div class="ipbox">
+
           <code class="ip" id="ipText">chalzeesmp.net</code>
+
           <button class="btn" id="copyBtn">Copy IP</button>
+
           <span style="color:var(--muted)">Java & Bedrock supported</span>
+
         </div>
 
+
+
         <div class="statgrid">
+
           <div class="stat">
+
             <div class="k" id="statPlayers">--</div>
+
             <div class="l">Players Online</div>
+
           </div>
+
           <div class="stat">
+
             <div class="k" id="statVersion">--</div>
+
             <div class="l">Game Version</div>
+
           </div>
+
           <div class="stat">
+
             <div class="k" id="statLatency">--</div>
+
             <div class="l">Latency (ms)</div>
+
           </div>
+
         </div>
+
       </div>
+
+
+
 
 
       <div class="hero-card">
+
         <div class="section-title" style="margin:2px 0 10px">What is ChalzeeSMP?</div>
+
         <p class="section-sub" style="margin:0">
+
     A survival server similar to DonutSMP with RTP, an action house, a shop and pvp enabled.
+
         </p>
+
         <div class="statusbar" id="statusBar" aria-live="polite">
+
           <div class="dot down" id="statusDot" title="Server status light"></div>
+
           <strong id="statusText">Checking status…</strong>
+
+
+          <span class="pill" id="pillPlayers">players: --/--</span>
+
+
+          <span class="pill" id="pillVersion">version: --</span>
+
+
+          <span class="pill" id="pillMotd">motd: --</span>
+
         </div>
+
       </div>
+
     </div>
+
   </section>
+
+
 
 <section style="padding:60px 0; text-align:center;">
+
   <a href="store.html" class="btn" style="font-size:2rem; padding:24px 48px; max-width:400px; width:80%; display:inline-block; border-radius:24px;">
+
     Store
+
   </a>
+
 </section>
+
   <section id="about">
+
     <div class="container">
+
       <h2 class="section-title">Why you’ll love it</h2>
+
         <article class="card">
+
           <div class="ic" aria-hidden="true">
+
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+
               <circle cx="12" cy="12" r="9" fill="white"/>
+
               <path d="M7 12h10M12 7v10" stroke="black" stroke-opacity=".2" stroke-width="2"/>
+
             </svg>
+
           </div>
+
           <h3>Player Economy</h3>
+
           <p>Shops, auctions, bounties</p>
+
         </article>
 
 
 
+
+
+
+
         <article class="card">
+
           <div class="ic" aria-hidden="true">
+
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+
               <rect x="3" y="5" width="18" height="14" rx="2" fill="white"/>
+
               <path d="M7 9h10v2H7z" fill="black" fill-opacity=".15"/>
+
             </svg>
+
           </div>
+
           <h3>Chalzee+</h3>
+
           <p>Faster progression and exclusive rewards through Chalzee+</p>
+
         </article>
 
+
+
         <article class="card">
+
           <div class="ic" aria-hidden="true">
+
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+
               <path d="M3 12h18M3 12l5-5m-5 5l5 5" stroke="white" stroke-width="2"/>
+
             </svg>
+
           </div>
+
           <h3>Events</h3>
+
           <p>We host many events to keep the server fun</p>
+
         </article>
+
+
+
 
 
       </div>
+
     </div>
+
   </section>
+
+
+
 
 
   <section>
+
     <div class="container cta">
+
       <div>
+
         <h2 class="section-title">How To Join</h2>
+
         <div class="ipbox" id="join">
+
           <div>
+
             <div class="pill">Java: <strong>chalzeesmp.net</strong> • 1.8++</div>
+
             <div class="pill">Bedrock: <strong>chalzeesmp.net</strong> • Port <strong>25565</strong></div>
+
           </div>
+
           <button class="btn" id="copyBtn2">Copy IP</button>
+
           <a class="btn secondary" href="#faq">How to join?</a>
+
         </div>
+
       </div>
+
     </div>
+
   </section>
+
+
+
 
 
 <section id="news">
+
   <div class="container">
+
     <h2 class="section-title">Latest News</h2>
+
     <p class="section-sub">Stay updated with the newest server events and updates.</p>
 
+
+
     <div class="features news-grid">
+
       <article class="card">
+
         <div class="ic" aria-hidden="true">
+
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+
             <path d="M4 6h16M4 10h16M4 14h16M4 18h16" stroke="white" stroke-width="2"/>
+
           </svg>
+
         </div>
+
         <h3>Season 1 Launch</h3>
+
         <p>Our brand new season is live with a new lobby and auction house!</p>
+
       </article>
+
+
+
+
 
 
 
       <article class="card">
+
         <div class="ic" aria-hidden="true">
+
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+
             <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"/>
+
           </svg>
+
         </div>
+
         <h3>Server Maintenance</h3>
+
         <p>We are working to add crates and shards</p>
+
       </article>
+
     </div>
+
   </div>
+
 </section>
 
 
+
+
+
   <section id="faq">
+
     <div class="container">
+
       <h2 class="section-title">FAQ</h2>
+
       <div class="faq">
+
         <details>
+
           <summary>Is the server pay‑to‑win?</summary>
+
           <p>No. But Chalzee+ plus speeds up progression</p>
+
         </details>
+
         <details>
+
           <summary>Do you allow griefing or raiding?</summary>
+
           <p>Yes.</p>
+
         </details>
+
         <details>
+
           <summary>What Minecraft versions are supported?</summary>
+
           <p>All version 1.8+ on java and bedrock</p>
+
         </details>
+
         <details>
+
           <summary>How do I report cheaters?</summary>
+
           <p>Talk to a staff member</p>
+
         </details>
+
       </div>
+
     </div>
+
   </section>
 
-  
+
+
+
+
   <footer>
+
     <div class="container footgrid">
+
       <div>
+
         <div style="font-weight:900; letter-spacing:.6px; margin-bottom:8px;">ChalzeeSMP</div>
+
         <div class="links">
+
           <a href="discord.chalzeesmp.net" class="btn" target="_blank">Discord</a>
+
           <a href="store.html" class="btn" target="_blank">Store</a>
+
           <a href="rues.html" class="btn" target="_blank">Rules</a>
+
         </div>
+
         <p style="margin-top:12px; color:#93a3d8">© <span id="year"></span> ChalzeeSMP Not affiliated with Mojang.</p>
+
       </div>
+
       <div>
+
         <div style="font-weight:800; margin-bottom:6px;">Quick Join</div>
+
         <div class="ipbox">
+
           <code class="ip">chalzeesmp.net</code>
+
           <button class="btn" id="copyBtn3">Copy IP</button>
+
         </div>
+
       </div>
+
     </div>
+
   </footer>
 
+
+
   <script>
-  
+
+
+
     const canvas = document.getElementById('particles');
+
     const ctx = canvas.getContext('2d');
+
     let w, h, particles = [];
+
     function resize(){
+
       w = canvas.width = window.innerWidth;
+
       h = canvas.height = document.querySelector('.hero').offsetHeight + 60;
+
     }
+
     window.addEventListener('resize', resize); resize();
+
     function makeParticles(n){
+
       particles = [];
+
       for(let i=0;i<n;i++){
+
         particles.push({
+
           x: Math.random()*w,
+
           y: Math.random()*h,
+
           vx: (Math.random()-.5)*.35,
+
           vy: (Math.random()-.5)*.35,
+
           r: Math.random()*2 + .5,
+
           c: Math.random()<.5 ? 'rgba(0,230,255,.6)' : 'rgba(255,43,214,.55)'
+
         });
+
       }
+
     }
+
     makeParticles(140);
+
     function step(){
+
       ctx.clearRect(0,0,w,h);
+
       for(const p of particles){
+
         p.x+=p.vx; p.y+=p.vy;
+
         if(p.x<-5) p.x=w+5; if(p.x>w+5) p.x=-5;
+
         if(p.y<-5) p.y=h+5; if(p.y>h+5) p.y=-5;
+
         ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+
         ctx.fillStyle=p.c; ctx.fill();
+
       }
-  
+
+
+
       for(let i=0;i<particles.length;i++){
+
         for(let j=i+1;j<particles.length;j++){
+
           const a = particles[i], b = particles[j];
+
           const dx=a.x-b.x, dy=a.y-b.y, d=dx*dx+dy*dy;
+
           if(d < 10000){
+
             ctx.globalAlpha = 0.06;
+
             ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
+
             ctx.strokeStyle = '#a8e9ff'; ctx.stroke(); ctx.globalAlpha = 1;
+
           }
+
         }
+
       }
+
       requestAnimationFrame(step);
+
     }
+
     requestAnimationFrame(step);
 
 
+
+
+
     const ip = 'chalzeesmp.net';
+
     function copyIP(btn){
+
       navigator.clipboard.writeText(ip).then(()=>{
+
         const t = btn.textContent;
+
         btn.textContent = 'Copied!';
+
         btn.style.filter = 'brightness(1.2)';
+
         setTimeout(()=>{btn.textContent=t; btn.style.filter='';}, 1100);
+
       });
+
     }
+
     document.getElementById('copyBtn').onclick = e=>copyIP(e.currentTarget);
+
     document.getElementById('copyBtn2').onclick = e=>copyIP(e.currentTarget);
+
     document.getElementById('copyBtn3').onclick = e=>copyIP(e.currentTarget);
 
 
+
+
+
     const statusUrl = `https://api.mcsrvstat.us/2/${ip}`;
+
     const statusDot = document.getElementById('statusDot');
+
     const statusText = document.getElementById('statusText');
+
     const pillPlayers = document.getElementById('pillPlayers');
+
     const pillVersion = document.getElementById('pillVersion');
+
     const pillMotd = document.getElementById('pillMotd');
+
     const statPlayers = document.getElementById('statPlayers');
+
     const statVersion = document.getElementById('statVersion');
+
     const statLatency = document.getElementById('statLatency');
+
     const statusLink = document.getElementById('statusLink');
 
+
+
     async function pingServer(){
+
       try{
+
         const t0 = performance.now();
+
         const res = await fetch(statusUrl, {cache:'no-store'});
+
         const t1 = performance.now();
+
         const data = await res.json();
 
+
+
         const online = !!data.online;
+
         statusDot.className = 'dot ' + (online ? 'up' : 'down');
+
         statusText.textContent = online ? 'Online' : 'Offline';
 
+
+
         if(online){
+
           const playersNow = data.players?.online ?? 0;
+
           const playersMax = data.players?.max ?? '--';
+
           pillPlayers.textContent = `players: ${playersNow}/${playersMax}`;
+
           statPlayers.textContent = String(playersNow);
 
+
+
           const version = data.version || data.protocol || '--';
+
           pillVersion.textContent = `version: ${version}`;
+
           statVersion.textContent = String(version).replace('Paper ', '');
 
+
+
           const motd = Array.isArray(data.motd?.clean) ? data.motd.clean.join(' ') : (data.motd?.clean ?? '--');
+
           pillMotd.textContent = `motd: ${motd}`;
+
           statLatency.textContent = Math.max(1, Math.round(t1 - t0));
+
         }else{
+
           pillPlayers.textContent = 'players: --/--';
+
           pillVersion.textContent = 'version: --';
+
           pillMotd.textContent = 'motd: --';
+
           statPlayers.textContent = '--';
+
           statVersion.textContent = '--';
+
           statLatency.textContent = '--';
+
         }
+
       }catch(err){
+
         statusDot.className = 'dot down';
+
         statusText.textContent = 'Status error';
+
         pillPlayers.textContent = 'players: --/--';
+
         pillVersion.textContent = 'version: --';
+
         pillMotd.textContent = 'motd: --';
+
         statPlayers.textContent = '--';
+
         statVersion.textContent = '--';
+
         statLatency.textContent = '--';
+
       }
+
     }
+
     pingServer();
+
     setInterval(pingServer, 20000);
+
     statusLink.onclick = ()=>window.open(statusUrl, '_blank');
 
-  
+
+
+
+
     document.getElementById('year').textContent = new Date().getFullYear();
+
   </script>
+
 </body>
+
 </html>
