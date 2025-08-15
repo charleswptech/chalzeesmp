@@ -1,60 +1,322 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ChalzeeSMP — Shop Coming Soon</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg-0:#0a0b10;
-      --bg-1:#0e1220;
-      --card:#12172b;
-      --card-2:#0f1430;
-      --text:#e9f0ff;
-      --muted:#a6b0d6;
-      --brand:#00e6ff;
-      --brand-2:#ff2bd6;
-      --accent:#78ffb7;
-      --shadow: 0 8px 30px rgba(0,0,0,.45);
-      --radius:16px;
-      --radius-sm:12px;
-    }
-    *{box-sizing:border-box}
-    body{margin:0; font-family:"Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--text);
-      background: radial-gradient(1200px 600px at 10% -10%, rgba(0,230,255,.06), transparent 60%),
-                  radial-gradient(1000px 600px at 110% 10%, rgba(255,43,214,.06), transparent 60%),
-                  linear-gradient(180deg, var(--bg-0), var(--bg-1));
-      display:flex; justify-content:center; align-items:center; height:100vh; text-align:center;
-    }
-    header{position:absolute; top:0; width:100%; padding:16px 0; text-align:center; background:linear-gradient(180deg, rgba(10,12,20,.95), rgba(10,12,20,.65)); border-bottom:1px solid rgba(255,255,255,.08);}
-    header .brand{font-weight:900; font-size:1.5rem; letter-spacing:1px;}
-    .card{background:var(--card); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); padding:40px; max-width:500px; box-shadow:var(--shadow);}
-    h1{font-family:"Press Start 2P", monospace; font-size:clamp(24px, 4vw, 36px); margin-bottom:16px;}
-    p{color:var(--muted); margin-bottom:24px;}
-    .btn{
-      display:inline-block; padding:14px 20px; border-radius:14px; background:linear-gradient(135deg, var(--brand), var(--brand-2)); color:#001014; font-weight:800; text-decoration:none; box-shadow:0 0 20px rgba(0,230,255,.5); transition:.2s transform ease;
-    }
-    .btn:hover{transform:translateY(-2px);}
-    .coming-soon-icon{
-      font-size:64px; margin-bottom:16px; background:linear-gradient(135deg, var(--brand), var(--brand-2)); -webkit-background-clip:text; color:transparent; filter: drop-shadow(0 0 14px rgba(0,230,255,.3));
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ChalzeeSMP — Beta Shop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#131415;
+    --panel:#1b1d21;
+    --panel-2:#202328;
+    --text:#f3f5fb;
+    --muted:#9aa3b2;
+    --chip:#272a31;
+    --chip-active:#0b61ff;
+    --cta:#1677ff;
+    --cta-2:#0b61ff;
+    --danger:#ff4d4d;
+    --radius:18px;
+    --shadow: 0 14px 30px rgba(0,0,0,.45);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; font-family: "Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(900px 500px at -10% 0, rgba(22,119,255,.10), transparent 60%),
+      radial-gradient(800px 500px at 110% 10%, rgba(255,77,77,.08), transparent 60%),
+      linear-gradient(180deg, #0f1012, var(--bg));
+  }
+  .topbar{
+    position:sticky; top:0; z-index:20;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 22px; background:rgba(15,16,18,.75); backdrop-filter: blur(8px);
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .brand{font-weight:800; letter-spacing:.3px}
+  .cart-btn{
+    background:linear-gradient(135deg,var(--cta),var(--cta-2));
+    color:#fff; border:none; padding:10px 14px; border-radius:12px;
+    font-weight:800; box-shadow:0 6px 16px rgba(22,119,255,.35); cursor:pointer;
+  }
+  .wrap{max-width:1200px; margin:0 auto; padding:24px}
+  .center{display:flex; align-items:center; justify-content:center; min-height:calc(100vh - 64px);}
+  .gate{
+    width:min(560px, 92vw); background:var(--panel); border:1px solid rgba(255,255,255,.08);
+    border-radius:var(--radius); padding:32px; text-align:center; box-shadow:var(--shadow);
+  }
+  .gate h1{margin:6px 0 10px; font-size:1.8rem}
+  .gate p{color:var(--muted); margin-bottom:18px}
+  .gate input{
+    width:100%; padding:14px 16px; border-radius:12px; border:1px solid rgba(255,255,255,.08);
+    background:#0f1114; color:var(--text); font-size:1rem; outline:none;
+  }
+  .gate .submit{
+    margin-top:14px; width:100%; padding:14px 16px; border-radius:12px; border:none;
+    background:linear-gradient(135deg,var(--cta),var(--cta-2)); color:#001326; font-weight:900; cursor:pointer;
+    box-shadow:0 10px 24px rgba(22,119,255,.35);
+  }
+  .gate .err{display:none; color:var(--danger); margin-top:10px; font-weight:700}
+  .hidden{display:none}
+  .grid{
+    display:grid; gap:28px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+  .card{
+    position:relative; background:linear-gradient(180deg,var(--panel),var(--panel-2));
+    border:1px solid rgba(255,255,255,.08); border-radius:24px; padding:22px 18px 18px;
+    box-shadow: var(--shadow); transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .card.big{grid-column: span 2; padding:32px;}
+  .card:hover{ transform: translateY(-2px); box-shadow: 0 18px 34px rgba(0,0,0,.55); }
+  .title{font-size:1.35rem; font-weight:800; margin:8px 0 4px}
+  .price{color:var(--muted); margin-bottom:12px; font-weight:600}
+  .badge{
+    position:absolute; right:18px; top:18px; background:#ff7a45; color:#111; font-weight:900;
+    padding:6px 10px; border-radius:999px; font-size:.78rem; box-shadow:0 6px 14px rgba(255,122,69,.4);
+  }
+  .chips{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 14px}
+  .chip{
+    background:var(--chip); color:#cbd3e1; border:none; border-radius:12px; padding:10px 12px; font-weight:800;
+    cursor:pointer; transition: transform .08s ease;
+  }
+  .chip:active{ transform: scale(.98); }
+  .chip.active{ background:var(--chip-active); color:#fff; box-shadow:0 6px 16px rgba(11,97,255,.35); }
+  .add{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    width:100%; padding:12px 14px; border-radius:14px; border:none;
+    background:linear-gradient(135deg,var(--cta),var(--cta-2)); color:white; font-weight:900; cursor:pointer;
+    box-shadow:0 10px 24px rgba(22,119,255,.35);
+  }
+  .add svg{width:18px; height:18px}
+  .drawer{
+    position:fixed; inset:0 0 0 auto; width:min(420px, 92vw); transform: translateX(110%);
+    transition: transform .28s ease; background: #0f1114; z-index:40; display:flex; flex-direction:column;
+    border-left:1px solid rgba(255,255,255,.08); box-shadow: -14px 0 28px rgba(0,0,0,.5);
+  }
+  .drawer.open{ transform: translateX(0%); }
+  .drawer-header{
+    padding:16px 18px; background:rgba(255,255,255,.03); display:flex; align-items:center; justify-content:space-between;
+    border-bottom:1px solid rgba(255,255,255,.08); font-weight:800;
+  }
+  .drawer-body{ padding:14px 16px; overflow:auto; flex:1 }
+  .line{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,.06); }
+  .line .meta{display:flex; flex-direction:column; text-align:left}
+  .mini{ color:var(--muted); font-size:.9rem }
+  .qtySelect{ background:var(--chip); color:#fff; border:none; padding:8px 10px; border-radius:10px; font-weight:800 }
+  .remove{ background:transparent; border:1px solid rgba(255,255,255,.18); color:#fff; padding:6px 10px; border-radius:10px; cursor:pointer }
+  .drawer-footer{
+    padding:16px; border-top:1px solid rgba(255,255,255,.08); display:flex; flex-direction:column; gap:10px;
+  }
+  .total{ display:flex; align-items:center; justify-content:space-between; font-weight:900 }
+  .checkout{
+    padding:12px 14px; border-radius:12px; border:none; font-weight:900; cursor:pointer;
+    background:linear-gradient(135deg,#20d07a,#10b981); color:#04120c;
+  }
+  .spacer{height:8px}
+  .muted{color:var(--muted)}
+  ul{padding-left:18px; margin:6px 0;}
+
+</style>
 </head>
 <body>
 
-<header>
-  <div class="brand">ChalzeeSMP Shop</div>
-</header>
-
-<div class="card">
-  <div class="coming-soon-icon">🛒</div>
-  <h1>Shop Coming Soon!</h1>
-  <p>Our Shop is under construction. Chalzee+ coming soon!</p>
-  <a href="index.html" class="btn">← Back to Home</a>
+<div class="topbar">
+  <div class="brand">ChalzeeSMP — Beta Shop</div>
+  <button class="cart-btn" id="openCartBtn">View Cart (<span id="cartCount">0</span>)</button>
 </div>
 
+<div class="center" id="gateWrap">
+  <div class="gate">
+
+  <h1>Shop Coming Soon!</h1>
+  <p>Our Shop is under construction. Chalzee+ coming soon!</p>
+
+    <h1>Beta Access</h1>
+    <p class="muted">Enter the beta password to view the shop.</p>
+    <input type="password" id="gatePass" placeholder="Password" />
+    <button class="submit" id="gateBtn">Enter</button>
+    <div class="err" id="gateErr">Incorrect password. Try again.</div>
+  </div>
+</div>
+
+<div class="wrap hidden" id="shopWrap">
+  <div class="grid" id="grid"></div>
+</div>
+
+<aside class="drawer" id="drawer">
+  <div class="drawer-header">
+    <span>Your Cart</span>
+    <button class="remove" id="closeCartBtn">Close</button>
+  </div>
+  <div class="drawer-body" id="drawerBody">
+    <p class="muted">Your cart is empty.</p>
+  </div>
+  <div class="drawer-footer">
+    <div class="total"><span>Total</span><span id="total">$0.00</span></div>
+    <button class="checkout" id="checkoutBtn">Checkout</button>
+    <p class="muted" style="margin:0">no real payments.</p>
+  </div>
+</aside>
+
+<script>
+const products = [
+  { id: 'common',    name: 'Common Key',    price: 0.99,  color: '#36d16a' },
+  { id: 'gold',      name: 'Gold Key',      price: 3.99,  color: '#ffb21f' },
+  { id: 'amethyst',  name: 'Amethyst Key',  price: 4.99,  color: '#b07cff', badge: 'Most Popular' },
+  { id: 'prime',     name: 'Prime Key',     price: 2.99,  color: '#5bb6ff' },
+  { id: 'chalzee',   name: 'Chalzee+',      price: 3.99,  color: '#10b981', perks: [
+      'Exclusive Discord role',
+      'Access to beta test features',
+      'Your own voice room in the discord server',
+      'Extra crate keys',
+      'Priority Que',
+      'Acsess to exclusive Chalzee+ only events and giveaways'
+    ], big:true }
+];
+const qtyOptions = [1,5,10,15,20,30];
+let selectedQty = {}; 
+let cart = [];       
+
+const gateBtn = document.getElementById('gateBtn');
+gateBtn.addEventListener('click', () => {
+  const val = document.getElementById('gatePass').value.trim();
+  const err = document.getElementById('gateErr');
+  if (val === '123456') {
+    document.getElementById('gateWrap').classList.add('hidden');
+    document.getElementById('shopWrap').classList.remove('hidden');
+    renderGrid();
+  } else {
+    err.style.display = 'block';
+  }
+});
+
+function renderGrid(){
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  products.forEach((p) => {
+    selectedQty[p.id] = 1;
+    const card = document.createElement('div');
+    card.className = 'card' + (p.big ? ' big' : '');
+    if (p.badge){
+      const badge = document.createElement('div');
+      badge.className = 'badge';
+      badge.textContent = p.badge;
+      card.appendChild(badge);
+    }
+    const title = document.createElement('div');
+    title.className='title';
+    title.textContent=p.name;
+    card.appendChild(title);
+
+    const price = document.createElement('div');
+    price.className='price';
+    price.textContent = p.perks ? `$${p.price.toFixed(2)}/month` : `$${p.price.toFixed(2)}`;
+    card.appendChild(price);
+
+    if (p.perks){
+      const ul = document.createElement('ul');
+      p.perks.forEach(perk => {
+        const li = document.createElement('li');
+        li.textContent = perk;
+        ul.appendChild(li);
+      });
+      card.appendChild(ul);
+    } else {
+      const chips = document.createElement('div');
+      chips.className='chips';
+      qtyOptions.forEach((q)=>{
+        const chip = document.createElement('button');
+        chip.className = 'chip' + (q===1 ? ' active' : '');
+        chip.textContent = q+'x';
+        chip.setAttribute('aria-pressed', q===1 ? 'true' : 'false');
+        chip.addEventListener('click', ()=>{
+          selectedQty[p.id] = q;
+          [...chips.children].forEach(c=>{ c.classList.remove('active'); c.setAttribute('aria-pressed','false'); });
+          chip.classList.add('active'); chip.setAttribute('aria-pressed','true');
+        });
+        chips.appendChild(chip);
+      });
+      card.appendChild(chips);
+    }
+
+    const add = document.createElement('button');
+    add.className='add';
+    add.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6l-2-2"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/>
+      </svg> Add to Cart`;
+    add.addEventListener('click', ()=> addToCart(p.id));
+    card.appendChild(add);
+
+    grid.appendChild(card);
+  });
+}
+
+const drawer = document.getElementById('drawer');
+document.getElementById('openCartBtn').addEventListener('click', ()=> drawer.classList.add('open'));
+document.getElementById('closeCartBtn').addEventListener('click', ()=> drawer.classList.remove('open'));
+
+function addToCart(id){
+  const p = products.find(x=>x.id===id);
+  const qty = selectedQty[id] || 1;
+  const existing = cart.find(x=>x.id===id);
+  if (existing){ existing.qty += qty; } else { cart.push({ id: p.id, name: p.name, price: p.price, qty }); }
+  updateCart();
+}
+
+function updateCart(){
+  const body = document.getElementById('drawerBody');
+  const count = cart.reduce((n,i)=>n+i.qty,0);
+  document.getElementById('cartCount').textContent = count;
+  if (!cart.length){ body.innerHTML = '<p class="muted">Your cart is empty.</p>'; document.getElementById('total').textContent = '$0.00'; return; }
+  body.innerHTML = '';
+  let total = 0;
+  cart.forEach(item=>{
+    total += item.qty * item.price;
+    const line = document.createElement('div');
+    line.className='line';
+    const meta = document.createElement('div');
+    meta.className='meta';
+    meta.innerHTML = `<strong>${item.name}</strong><span class="mini">$${item.price.toFixed(2)} each</span>`;
+    const right = document.createElement('div');
+    right.style.display='flex'; right.style.gap='8px'; right.style.alignItems='center';
+    const select = document.createElement('select');
+    select.className='qtySelect';
+    qtyOptions.forEach(q=>{
+      const opt = document.createElement('option');
+      opt.value=q; opt.textContent=q+'x'; if (q===item.qty) opt.selected=true;
+      select.appendChild(opt);
+    });
+    select.addEventListener('change', ()=>{
+      item.qty = parseInt(select.value,10);
+      updateCart();
+    });
+    const price = document.createElement('div');
+    price.className='mini'; price.textContent = `$${(item.qty*item.price).toFixed(2)}`;
+    const remove = document.createElement('button');
+    remove.className='remove'; remove.textContent='Remove';
+    remove.addEventListener('click', ()=>{
+      cart = cart.filter(x=>x.id!==item.id);
+      updateCart();
+    });
+    right.appendChild(select); right.appendChild(price); right.appendChild(remove);
+    line.appendChild(meta); line.appendChild(right);
+    body.appendChild(line);
+  });
+  document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+}
+
+document.getElementById('checkoutBtn').addEventListener('click', ()=>{
+  if (!cart.length){ alert('Your cart is empty.'); return; }
+  alert('Thanks for testing the beta shop! (Mock checkout)');
+  cart = [];
+  updateCart();
+  drawer.classList.remove('open');
+});
+</script>
 </body>
 </html>
