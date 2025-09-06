@@ -7,120 +7,225 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#131415;
-    --panel:#1b1d21;
-    --panel-2:#202328;
-    --text:#f3f5fb;
-    --muted:#9aa3b2;
-    --chip:#272a31;
-    --chip-active:#0b61ff;
-    --cta:#1677ff;
-    --cta-2:#0b61ff;
-    --danger:#ff4d4d;
-    --radius:18px;
-    --shadow: 0 14px 30px rgba(0,0,0,.45);
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0; font-family: "Outfit", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    color:var(--text);
-    background:
-      radial-gradient(900px 500px at -10% 0, rgba(22,119,255,.10), transparent 60%),
-      radial-gradient(800px 500px at 110% 10%, rgba(255,77,77,.08), transparent 60%),
-      linear-gradient(180deg, #0f1012, var(--bg));
-  }
-  .topbar{
-    position:sticky; top:0; z-index:20;
-    display:flex; align-items:center; justify-content:space-between;
-    padding:14px 22px; background:rgba(15,16,18,.75); backdrop-filter: blur(8px);
-    border-bottom:1px solid rgba(255,255,255,.06);
-  }
-  .brand{font-weight:800; letter-spacing:.3px}
-  .cart-btn{
-    background:linear-gradient(135deg,var(--cta),var(--cta-2));
-    color:#fff; border:none; padding:10px 14px; border-radius:12px;
-    font-weight:800; box-shadow:0 6px 16px rgba(22,119,255,.35); cursor:pointer;
-  }
-  .wrap{max-width:1200px; margin:0 auto; padding:24px}
-  .center{display:flex; align-items:center; justify-content:center; min-height:calc(100vh - 64px);}
-  .gate{
-    width:min(560px, 92vw); background:var(--panel); border:1px solid rgba(255,255,255,.08);
-    border-radius:var(--radius); padding:32px; text-align:center; box-shadow:var(--shadow);
-  }
-  .gate h1{margin:6px 0 10px; font-size:1.8rem}
-  .gate p{color:var(--muted); margin-bottom:18px}
-  .gate input{
-    width:100%; padding:14px 16px; border-radius:12px; border:1px solid rgba(255,255,255,.08);
-    background:#0f1114; color:var(--text); font-size:1rem; outline:none;
-  }
-  .gate .submit{
-    margin-top:14px; width:100%; padding:14px 16px; border-radius:12px; border:none;
-    background:linear-gradient(135deg,var(--cta),var(--cta-2)); color:#001326; font-weight:900; cursor:pointer;
-    box-shadow:0 10px 24px rgba(22,119,255,.35);
-  }
-  .gate .err{display:none; color:var(--danger); margin-top:10px; font-weight:700}
-  .hidden{display:none}
-  .grid{
-    display:grid; gap:28px;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  }
-  .card{
-    position:relative; background:linear-gradient(180deg,var(--panel),var(--panel-2));
-    border:1px solid rgba(255,255,255,.08); border-radius:24px; padding:22px 18px 18px;
-    box-shadow: var(--shadow); transition: transform .15s ease, box-shadow .15s ease;
-  }
-  .card.big{grid-column: span 2; padding:32px;}
-  .card:hover{ transform: translateY(-2px); box-shadow: 0 18px 34px rgba(0,0,0,.55); }
-  .title{font-size:1.35rem; font-weight:800; margin:8px 0 4px}
-  .price{color:var(--muted); margin-bottom:12px; font-weight:600}
-  .badge{
-    position:absolute; right:18px; top:18px; background:#ff7a45; color:#111; font-weight:900;
-    padding:6px 10px; border-radius:999px; font-size:.78rem; box-shadow:0 6px 14px rgba(255,122,69,.4);
-  }
-  .chips{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 14px}
-  .chip{
-    background:var(--chip); color:#cbd3e1; border:none; border-radius:12px; padding:10px 12px; font-weight:800;
-    cursor:pointer; transition: transform .08s ease;
-  }
-  .chip:active{ transform: scale(.98); }
-  .chip.active{ background:var(--chip-active); color:#fff; box-shadow:0 6px 16px rgba(11,97,255,.35); }
-  .add{
-    display:flex; align-items:center; justify-content:center; gap:8px;
-    width:100%; padding:12px 14px; border-radius:14px; border:none;
-    background:linear-gradient(135deg,var(--cta),var(--cta-2)); color:white; font-weight:900; cursor:pointer;
-    box-shadow:0 10px 24px rgba(22,119,255,.35);
-  }
-  .add svg{width:18px; height:18px}
-  .drawer{
-    position:fixed; inset:0 0 0 auto; width:min(420px, 92vw); transform: translateX(110%);
-    transition: transform .28s ease; background: #0f1114; z-index:40; display:flex; flex-direction:column;
-    border-left:1px solid rgba(255,255,255,.08); box-shadow: -14px 0 28px rgba(0,0,0,.5);
-  }
-  .drawer.open{ transform: translateX(0%); }
-  .drawer-header{
-    padding:16px 18px; background:rgba(255,255,255,.03); display:flex; align-items:center; justify-content:space-between;
-    border-bottom:1px solid rgba(255,255,255,.08); font-weight:800;
-  }
-  .drawer-body{ padding:14px 16px; overflow:auto; flex:1 }
-  .line{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,.06); }
-  .line .meta{display:flex; flex-direction:column; text-align:left}
-  .mini{ color:var(--muted); font-size:.9rem }
-  .qtySelect{ background:var(--chip); color:#fff; border:none; padding:8px 10px; border-radius:10px; font-weight:800 }
-  .remove{ background:transparent; border:1px solid rgba(255,255,255,.18); color:#fff; padding:6px 10px; border-radius:10px; cursor:pointer }
-  .drawer-footer{
-    padding:16px; border-top:1px solid rgba(255,255,255,.08); display:flex; flex-direction:column; gap:10px;
-  }
-  .total{ display:flex; align-items:center; justify-content:space-between; font-weight:900 }
-  .checkout{
-    padding:12px 14px; border-radius:12px; border:none; font-weight:900; cursor:pointer;
-    background:linear-gradient(135deg,#20d07a,#10b981); color:#04120c;
-  }
-  .spacer{height:8px}
-  .muted{color:var(--muted)}
-  ul{padding-left:18px; margin:6px 0;}
+:root {
+  --bg:#131415;
+  --panel:#1b1d21;
+  --panel-2:#202328;
+  --text:#f3f5fb;
+  --muted:#9aa3b2;
+  --chip:#272a31;
+  --chip-active:#0b61ff;
+  --cta:#1677ff;
+  --cta-2:#0b61ff;
+  --danger:#ff4d4d;
+  --radius:20px;
+  --shadow: 0 14px 30px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:"Outfit",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(900px 500px at -10% 0, rgba(22,119,255,.08), transparent 60%),
+    radial-gradient(800px 500px at 110% 10%, rgba(255,77,77,.08), transparent 60%),
+    linear-gradient(180deg, #0f1012, var(--bg));
+  min-height:100vh;
+}
 
+/* Topbar */
+.topbar {
+  position:sticky; top:0; z-index:20;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 22px;
+  background:rgba(15,16,18,.85);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.brand { font-weight:800; font-size:1.1rem }
+.cart-btn {
+  background:linear-gradient(135deg,var(--cta),var(--cta-2));
+  color:#fff; border:none; padding:10px 16px; border-radius:14px;
+  font-weight:800; cursor:pointer;
+  box-shadow:0 6px 16px rgba(22,119,255,.35);
+  transition:transform .2s ease;
+}
+.cart-btn:hover { transform:scale(1.05); }
+
+/* Gate screen */
+.center{display:flex; align-items:center; justify-content:center; min-height:calc(100vh - 64px);}
+.gate {
+  width:min(560px, 92vw);
+  background:var(--panel);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--radius);
+  padding:36px 28px;
+  text-align:center;
+  box-shadow:var(--shadow);
+  animation: fadeUp .6s ease;
+}
+.gate h1 { font-size:1.8rem; margin-bottom:10px; }
+.gate p { color:var(--muted); margin-bottom:18px; }
+.gate input {
+  width:100%; padding:14px 16px; border-radius:12px;
+  border:1px solid rgba(255,255,255,.08);
+  background:#0f1114; color:var(--text); font-size:1rem; outline:none;
+}
+.gate .submit {
+  margin-top:14px; width:100%; padding:14px 16px; border-radius:12px; border:none;
+  background:linear-gradient(135deg,var(--cta),var(--cta-2)); color:#fff;
+  font-weight:900; cursor:pointer;
+  box-shadow:0 10px 24px rgba(22,119,255,.35);
+  transition: transform .2s ease;
+}
+.gate .submit:hover { transform:translateY(-2px); }
+.gate .err {display:none; color:var(--danger); margin-top:10px; font-weight:700}
+
+.hidden{display:none}
+
+/* Shop grid */
+.wrap {max-width:1200px; margin:0 auto; padding:32px;}
+.grid {
+  display:grid; gap:28px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.card {
+  position: relative;
+  background: linear-gradient(180deg, var(--panel), var(--panel-2));
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 60px 20px 26px 20px; /* increased top padding for badge */
+  box-shadow: var(--shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+
+.card.show { opacity:1; transform:translateY(0); transition:.6s ease; }
+.card.big { grid-column: span 2; }
+.card:hover { transform:translateY(-6px); box-shadow:0 18px 34px rgba(0,0,0,.55); }
+
+.title { font-size:1.4rem; font-weight:800; margin:8px 0 6px }
+.price { color:var(--muted); margin-bottom:14px; font-weight:600 }
+
+.badge {
+  position:absolute; right:18px; top:18px;
+  background:#ffb21f; color:#111; font-weight:900;
+  padding:6px 12px; border-radius:999px; font-size:.78rem;
+  box-shadow:0 6px 14px rgba(255,178,31,.4);
+}
+
+/* Perks list */
+ul {padding-left:20px; margin:10px 0 18px; text-align:left;}
+ul li {margin-bottom:6px; color:var(--text); position:relative; list-style:none; padding-left:22px;}
+ul li::before {
+  content:"✔"; position:absolute; left:0; color:#20d07a; font-weight:700;
+}
+
+/* Chips */
+.chips {display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 18px}
+.chip {
+  background:var(--chip); color:#cbd3e1; border:none; border-radius:12px;
+  padding:10px 12px; font-weight:800; cursor:pointer;
+  transition: transform .08s ease, background .2s ease;
+}
+.chip:hover { transform:scale(1.05); }
+.chip.active {
+  background:var(--chip-active); color:#fff;
+  box-shadow:0 6px 16px rgba(11,97,255,.35);
+}
+
+/* Buttons */
+.add {
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  width:100%; padding:14px 16px; border-radius:14px; border:none;
+  background:linear-gradient(135deg,var(--cta),var(--cta-2)); color:white;
+  font-weight:900; cursor:pointer;
+  box-shadow:0 10px 24px rgba(22,119,255,.35);
+  transition: transform .2s ease;
+}
+.add:hover { transform:translateY(-2px); }
+.add svg {width:18px; height:18px}
+
+/* Cart drawer */
+.drawer {
+  position:fixed; inset:0 0 0 auto; width:min(420px, 92vw);
+  transform: translateX(110%);
+  transition: transform .35s cubic-bezier(.4,0,.2,1);
+  background:#0f1114; z-index:40; display:flex; flex-direction:column;
+  border-left:1px solid rgba(255,255,255,.08);
+  box-shadow: -14px 0 28px rgba(0,0,0,.5);
+}
+.drawer.open { transform:translateX(0); }
+.drawer-header {
+  padding:16px 18px; background:rgba(255,255,255,.03);
+  display:flex; align-items:center; justify-content:space-between;
+  border-bottom:1px solid rgba(255,255,255,.08); font-weight:800;
+}
+.drawer-body { padding:14px 16px; overflow:auto; flex:1 }
+.line { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,.06); }
+.line .meta {display:flex; flex-direction:column; text-align:left}
+.mini { color:var(--muted); font-size:.9rem }
+.qtySelect { background:var(--chip); color:#fff; border:none; padding:8px 10px; border-radius:10px; font-weight:800 }
+.remove { background:transparent; border:1px solid rgba(255,255,255,.18); color:#fff; padding:6px 10px; border-radius:10px; cursor:pointer }
+
+.drawer-footer {
+  padding:16px; border-top:1px solid rgba(255,255,255,.08); display:flex; flex-direction:column; gap:10px;
+}
+.total { display:flex; align-items:center; justify-content:space-between; font-weight:900 }
+.checkout {
+  padding:12px 14px; border-radius:12px; border:none; font-weight:900; cursor:pointer;
+  background:linear-gradient(135deg,#20d07a,#10b981); color:#04120c;
+  transition: transform .2s ease;
+}
+.checkout:hover { transform:translateY(-2px); }
+
+/* Animations */
+@keyframes fadeUp { from {opacity:0; transform:translateY(30px);} to {opacity:1; transform:translateY(0);} }
+
+.key-badge {
+  position: absolute;
+  top: 5px; /* move above card */
+  left: 10%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  box-shadow: 0 0 20px rgba(255,255,255,0.15);
+  animation: floatBadge 3s ease-in-out infinite;
+  z-index: 10; /* above card */
+}
+
+.key-badge svg { width:24px; height:24px; stroke:#fff; }
+.key-badge.common { background:rgba(54,209,106,.15); box-shadow:0 0 20px rgba(54,209,106,.5); }
+.key-badge.gold { background:rgba(255,178,31,.15); box-shadow:0 0 20px rgba(255,178,31,.5); }
+.key-badge.amethyst { background:rgba(176,124,255,.15); box-shadow:0 0 20px rgba(176,124,255,.5); }
+.key-badge.prime { background:rgba(91,182,255,.15); box-shadow:0 0 20px rgba(91,182,255,.5); }
+.key-badge.chalzee { background:rgba(16,185,129,.2); box-shadow:0 0 30px rgba(16,185,129,.6); }
+.key-badge.chalzee::before { content:"👑"; font-size:26px; animation: pulse 1.6s infinite; }
+
+@keyframes floatBadge { 0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);} }
+@keyframes pulse { 0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.2);opacity:0.7;} }
+
+/* Card hover tilt */
+.card { perspective:1000px; position:relative; overflow:hidden; }
+.card:hover { transform: translateY(-6px) rotateX(4deg) rotateY(-4deg); transition: transform .25s ease; }
+
+/* Sparkle background */
+body::before {
+  content:"";
+  position:fixed; inset:0;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="white" opacity="0.15"><circle cx="2" cy="2" r="2"/></svg>');
+  background-size:100px 100px;
+  animation: sparkleMove 40s linear infinite;
+  pointer-events:none; z-index:0;
+}
+@keyframes sparkleMove { from{background-position:0 0;} to{background-position:1000px 1000px;} }
 </style>
 </head>
 <body>
@@ -132,9 +237,8 @@
 
 <div class="center" id="gateWrap">
   <div class="gate">
-
-  <h1>Shop Coming Soon!</h1>
-  <p>Our Shop is under construction. Chalzee+ coming soon!</p>
+    <h1>Shop Coming Soon!</h1>
+    <p>Our Shop is under construction. Chalzee+ coming soon!</p>
 
     <h1>Beta Access</h1>
     <p class="muted">Enter the beta password to view the shop.</p>
@@ -172,29 +276,29 @@ const products = [
   { id: 'chalzee',   name: 'Chalzee+',      price: 3.99,  color: '#10b981', perks: [
       'Exclusive Discord role',
       'Access to beta test features',
-      'Your own voice room in the discord server',
+      'Your own voice room in the Discord server',
       'Extra crate keys',
-      'Priority Que',
-      'Acsess to exclusive Chalzee+ only events and giveaways'
+      'Priority Queue',
+      'Exclusive Chalzee+ events and giveaways'
     ], big:true }
 ];
 const qtyOptions = [1,5,10,15,20,30];
 let selectedQty = {}; 
 let cart = [];       
 
-const gateBtn = document.getElementById('gateBtn');
-gateBtn.addEventListener('click', () => {
+// Gate logic
+document.getElementById('gateBtn').addEventListener('click', () => {
   const val = document.getElementById('gatePass').value.trim();
   const err = document.getElementById('gateErr');
   if (val === '123456') {
     document.getElementById('gateWrap').classList.add('hidden');
     document.getElementById('shopWrap').classList.remove('hidden');
     renderGrid();
-  } else {
-    err.style.display = 'block';
-  }
+    observeCards();
+  } else { err.style.display = 'block'; }
 });
 
+// Render products
 function renderGrid(){
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
@@ -202,50 +306,45 @@ function renderGrid(){
     selectedQty[p.id] = 1;
     const card = document.createElement('div');
     card.className = 'card' + (p.big ? ' big' : '');
-    if (p.badge){
-      const badge = document.createElement('div');
-      badge.className = 'badge';
-      badge.textContent = p.badge;
-      card.appendChild(badge);
+
+    // Add key badge or crown
+    const badge = document.createElement('div');
+    if(p.id === 'chalzee'){
+      badge.className = 'key-badge chalzee';
+    } else {
+      badge.className = 'key-badge ' + p.id;
+      badge.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6l-2-2"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/>
+      </svg>`;
     }
-    const title = document.createElement('div');
-    title.className='title';
-    title.textContent=p.name;
-    card.appendChild(title);
+    card.appendChild(badge);
 
-    const price = document.createElement('div');
-    price.className='price';
-    price.textContent = p.perks ? `$${p.price.toFixed(2)}/month` : `$${p.price.toFixed(2)}`;
-    card.appendChild(price);
+    if (p.badge){
+      const b = document.createElement('div');
+      b.className = 'badge';
+      b.textContent = p.badge;
+      card.appendChild(b);
+    }
 
-    if (p.perks){
+    const title = document.createElement('div'); title.className='title'; title.textContent=p.name; card.appendChild(title);
+    const price = document.createElement('div'); price.className='price'; price.textContent = p.perks ? `$${p.price.toFixed(2)}/month` : `$${p.price.toFixed(2)}`; card.appendChild(price);
+
+    if(p.perks){
       const ul = document.createElement('ul');
-      p.perks.forEach(perk => {
-        const li = document.createElement('li');
-        li.textContent = perk;
-        ul.appendChild(li);
-      });
+      p.perks.forEach(perk => { const li = document.createElement('li'); li.textContent = perk; ul.appendChild(li); });
       card.appendChild(ul);
     } else {
-      const chips = document.createElement('div');
-      chips.className='chips';
-      qtyOptions.forEach((q)=>{
-        const chip = document.createElement('button');
-        chip.className = 'chip' + (q===1 ? ' active' : '');
-        chip.textContent = q+'x';
-        chip.setAttribute('aria-pressed', q===1 ? 'true' : 'false');
-        chip.addEventListener('click', ()=>{
-          selectedQty[p.id] = q;
-          [...chips.children].forEach(c=>{ c.classList.remove('active'); c.setAttribute('aria-pressed','false'); });
-          chip.classList.add('active'); chip.setAttribute('aria-pressed','true');
-        });
+      const chips = document.createElement('div'); chips.className='chips';
+      qtyOptions.forEach(q=>{
+        const chip = document.createElement('button'); chip.className = 'chip'+(q===1?' active':''); chip.textContent=q+'x';
+        chip.setAttribute('aria-pressed', q===1?'true':'false');
+        chip.addEventListener('click', ()=>{ selectedQty[p.id]=q; [...chips.children].forEach(c=>{c.classList.remove('active'); c.setAttribute('aria-pressed','false');}); chip.classList.add('active'); chip.setAttribute('aria-pressed','true'); });
         chips.appendChild(chip);
       });
       card.appendChild(chips);
     }
 
-    const add = document.createElement('button');
-    add.className='add';
+    const add = document.createElement('button'); add.className='add';
     add.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6l-2-2"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/>
       </svg> Add to Cart`;
@@ -256,6 +355,7 @@ function renderGrid(){
   });
 }
 
+// Cart drawer logic
 const drawer = document.getElementById('drawer');
 document.getElementById('openCartBtn').addEventListener('click', ()=> drawer.classList.add('open'));
 document.getElementById('closeCartBtn').addEventListener('click', ()=> drawer.classList.remove('open'));
@@ -264,7 +364,7 @@ function addToCart(id){
   const p = products.find(x=>x.id===id);
   const qty = selectedQty[id] || 1;
   const existing = cart.find(x=>x.id===id);
-  if (existing){ existing.qty += qty; } else { cart.push({ id: p.id, name: p.name, price: p.price, qty }); }
+  if(existing){ existing.qty+=qty; } else { cart.push({id:p.id,name:p.name,price:p.price,qty}); }
   updateCart();
 }
 
@@ -272,51 +372,40 @@ function updateCart(){
   const body = document.getElementById('drawerBody');
   const count = cart.reduce((n,i)=>n+i.qty,0);
   document.getElementById('cartCount').textContent = count;
-  if (!cart.length){ body.innerHTML = '<p class="muted">Your cart is empty.</p>'; document.getElementById('total').textContent = '$0.00'; return; }
-  body.innerHTML = '';
-  let total = 0;
+  if(!cart.length){ body.innerHTML='<p class="muted">Your cart is empty.</p>'; document.getElementById('total').textContent='$0.00'; return; }
+  body.innerHTML='';
+  let total=0;
   cart.forEach(item=>{
     total += item.qty * item.price;
-    const line = document.createElement('div');
-    line.className='line';
-    const meta = document.createElement('div');
-    meta.className='meta';
-    meta.innerHTML = `<strong>${item.name}</strong><span class="mini">$${item.price.toFixed(2)} each</span>`;
-    const right = document.createElement('div');
-    right.style.display='flex'; right.style.gap='8px'; right.style.alignItems='center';
-    const select = document.createElement('select');
-    select.className='qtySelect';
-    qtyOptions.forEach(q=>{
-      const opt = document.createElement('option');
-      opt.value=q; opt.textContent=q+'x'; if (q===item.qty) opt.selected=true;
-      select.appendChild(opt);
-    });
-    select.addEventListener('change', ()=>{
-      item.qty = parseInt(select.value,10);
-      updateCart();
-    });
-    const price = document.createElement('div');
-    price.className='mini'; price.textContent = `$${(item.qty*item.price).toFixed(2)}`;
-    const remove = document.createElement('button');
-    remove.className='remove'; remove.textContent='Remove';
-    remove.addEventListener('click', ()=>{
-      cart = cart.filter(x=>x.id!==item.id);
-      updateCart();
-    });
+    const line=document.createElement('div'); line.className='line';
+    const meta=document.createElement('div'); meta.className='meta';
+    meta.innerHTML=`<strong>${item.name}</strong><span class="mini">$${item.price.toFixed(2)} each</span>`;
+    const right=document.createElement('div'); right.style.display='flex'; right.style.gap='8px'; right.style.alignItems='center';
+    const select=document.createElement('select'); select.className='qtySelect';
+    qtyOptions.forEach(q=>{ const opt=document.createElement('option'); opt.value=q; opt.textContent=q+'x'; if(q===item.qty) opt.selected=true; select.appendChild(opt); });
+    select.addEventListener('change', ()=>{ item.qty=parseInt(select.value,10); updateCart(); });
+    const price=document.createElement('div'); price.className='mini'; price.textContent=`$${(item.qty*item.price).toFixed(2)}`;
+    const remove=document.createElement('button'); remove.className='remove'; remove.textContent='Remove';
+    remove.addEventListener('click', ()=>{ cart=cart.filter(x=>x.id!==item.id); updateCart(); });
     right.appendChild(select); right.appendChild(price); right.appendChild(remove);
-    line.appendChild(meta); line.appendChild(right);
-    body.appendChild(line);
+    line.appendChild(meta); line.appendChild(right); body.appendChild(line);
   });
-  document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+  document.getElementById('total').textContent=`$${total.toFixed(2)}`;
 }
 
-document.getElementById('checkoutBtn').addEventListener('click', ()=>{
-  if (!cart.length){ alert('Your cart is empty.'); return; }
-  alert('Thanks for testing the beta shop! (Mock checkout)');
-  cart = [];
-  updateCart();
-  drawer.classList.remove('open');
+document.getElementById('checkoutBtn').addEventListener('click', ()=>{ 
+  if(!cart.length){ alert('Your cart is empty.'); return; } 
+  alert('Thanks for testing the beta shop! (Mock checkout)'); cart=[]; updateCart(); drawer.classList.remove('open'); 
 });
+
+function observeCards(){
+  const cards=document.querySelectorAll('.card');
+  const observer=new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.classList.add('show'); observer.unobserve(entry.target); } });
+  }, {threshold:0.2});
+  cards.forEach(card=>observer.observe(card));
+}
 </script>
+
 </body>
 </html>
