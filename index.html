@@ -487,6 +487,200 @@
       .navlinks{display:none}
 
     }
+    .news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.news-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.news-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--glow-brand);
+  border-color: rgba(0,230,255,.35);
+}
+
+.news-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: .9rem;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.news-cat {
+  background: rgba(0,230,255,.1);
+  border: 1px solid rgba(0,230,255,.3);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--brand);
+}
+
+.news-card h3 {
+  font-size: 1.2rem;
+  margin: 6px 0 10px;
+}
+
+.news-card p {
+  color: var(--muted);
+  flex-grow: 1;
+}
+
+.read-more {
+  margin-top: 12px;
+  font-weight: 700;
+  color: var(--brand);
+  text-decoration: none;
+  font-size: .95rem;
+}
+.read-more:hover { text-decoration: underline; }
+/* News grid */
+.news-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.news-card {
+  background: var(--card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 18px;
+  transition: 0.25s transform ease, 0.25s box-shadow ease;
+}
+
+.news-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--glow-brand);
+}
+
+.news-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+  color: var(--muted);
+}
+
+.news-cat {
+  font-weight: 700;
+  color: var(--brand);
+}
+
+.read-more {
+  display: inline-block;
+  margin-top: 8px;
+  font-weight: 600;
+  color: var(--brand);
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: var(--card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 24px;
+  width: min(600px, 90%);
+  color: var(--text);
+  box-shadow: var(--shadow);
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-close {
+  float: right;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.modal-close:hover {
+  color: var(--brand);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* About / Why You'll Love It */
+.about-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  margin-top: 28px;
+}
+
+.about-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 22px;
+  text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  backdrop-filter: blur(6px);
+}
+
+.about-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--glow-brand);
+}
+
+.icon-wrap {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--brand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px auto;
+  box-shadow: 0 0 12px rgba(255, 105, 180, 0.4);
+}
+
+.about-card h3 {
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+  color: var(--text);
+}
+
+.about-card p {
+  font-size: 0.95rem;
+  color: var(--muted);
+}
 
   </style>
 
@@ -655,87 +849,46 @@
 
 </section>
 
-  <section id="about">
+<section id="about">
+  <div class="container">
+    <h2 class="section-title">Why you’ll love it</h2>
+    <div class="about-grid">
 
-    <div class="container">
+      <article class="about-card">
+        <div class="icon-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="9" fill="white"/>
+            <path d="M7 12h10M12 7v10" stroke="black" stroke-opacity=".2" stroke-width="2"/>
+          </svg>
+        </div>
+        <h3>Player Economy</h3>
+        <p>Shops, auctions, bounties</p>
+      </article>
 
-      <h2 class="section-title">Why you’ll love it</h2>
+      <article class="about-card">
+        <div class="icon-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="5" width="18" height="14" rx="2" fill="white"/>
+            <path d="M7 9h10v2H7z" fill="black" fill-opacity=".15"/>
+          </svg>
+        </div>
+        <h3>Chalzee+</h3>
+        <p>Faster progression and exclusive rewards through Chalzee+</p>
+      </article>
 
-        <article class="card">
-
-          <div class="ic" aria-hidden="true">
-
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-
-              <circle cx="12" cy="12" r="9" fill="white"/>
-
-              <path d="M7 12h10M12 7v10" stroke="black" stroke-opacity=".2" stroke-width="2"/>
-
-            </svg>
-
-          </div>
-
-          <h3>Player Economy</h3>
-
-          <p>Shops, auctions, bounties</p>
-
-        </article>
-
-
-
-
-
-
-
-        <article class="card">
-
-          <div class="ic" aria-hidden="true">
-
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-
-              <rect x="3" y="5" width="18" height="14" rx="2" fill="white"/>
-
-              <path d="M7 9h10v2H7z" fill="black" fill-opacity=".15"/>
-
-            </svg>
-
-          </div>
-
-          <h3>Chalzee+</h3>
-
-          <p>Faster progression and exclusive rewards through Chalzee+</p>
-
-        </article>
-
-
-
-        <article class="card">
-
-          <div class="ic" aria-hidden="true">
-
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-
-              <path d="M3 12h18M3 12l5-5m-5 5l5 5" stroke="white" stroke-width="2"/>
-
-            </svg>
-
-          </div>
-
-          <h3>Events</h3>
-
-          <p>We host many events to keep the server fun</p>
-
-        </article>
-
-
-
-
-
-      </div>
+      <article class="about-card">
+        <div class="icon-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M3 12h18M3 12l5-5m-5 5l5 5" stroke="white" stroke-width="2"/>
+          </svg>
+        </div>
+        <h3>Events</h3>
+        <p>We host many events to keep the server fun</p>
+      </article>
 
     </div>
-
-  </section>
+  </div>
+</section>
 
 
 
@@ -776,64 +929,56 @@
 
 
 <section id="news">
-
   <div class="container">
-
     <h2 class="section-title">Latest News</h2>
+    <p class="section-sub">Stay updated with server updates, patch notes, and events.</p>
 
-    <p class="section-sub">Stay updated with the newest server events and updates.</p>
-
-
-
-    <div class="features news-grid">
-
-      <article class="card">
-
-        <div class="ic" aria-hidden="true">
-
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-
-            <path d="M4 6h16M4 10h16M4 14h16M4 18h16" stroke="white" stroke-width="2"/>
-
-          </svg>
-
+    <div class="news-grid">
+      <article class="news-card" data-id="1" data-date="2025-08-01">
+        <div class="news-meta">
+          <span class="news-cat">Update</span>
+          <time datetime="2025-09-05">Sept 5, 2025</time>
         </div>
-
-        <h3>Season 1 Launch</h3>
-
-        <p>Our brand new season is live with a new lobby and auction house!</p>
-
+        <h3>Lobby 3.0!</h3>
+        <p>Lobby 3.0 is done!</p>
+        <a href="#" class="read-more">Read More →</a>
       </article>
 
-
-
-
-
-
-
-      <article class="card">
-
-        <div class="ic" aria-hidden="true">
-
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-
-            <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"/>
-
-          </svg>
-
+      <article class="news-card" data-id="2" data-date="2025-09-04">
+        <div class="news-meta">
+          <span class="news-cat">Maintenance</span>
+          <time datetime="2025-09-04">Sept 4, 2025</time>
         </div>
-
         <h3>Server Maintenance</h3>
-
-        <p>We are working to add crates and shards</p>
-
+        <p>We’re working on tons of new features!</p>
+        <a href="#" class="read-more">Read More →</a>
       </article>
 
+      <article class="news-card" data-id="3" data-date="2025-09-05">
+        <div class="news-meta">
+          <span class="news-cat">Event</span>
+          <time datetime="2025-09-05">Sept 5, 2025</time>
+        </div>
+        <h3>Event Coming Soon!</h3>
+        <p>New event soon!</p>
+        <a href="#" class="read-more">Read More →</a>
+      </article>
     </div>
-
   </div>
-
 </section>
+
+
+<div id="newsModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close">&times;</span>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+
+
 
 
 
@@ -932,6 +1077,74 @@
 
 
   <script>
+
+const articles = {
+  1: {
+    title: "Lobby 3.0",
+    date: "September 5, 2025",
+    cat: "Update",
+    content: `
+      <p> After much anticipation and many challanges lobby 3.0 is finished and ready to release. 
+      Check out the discord server for more info!</p>
+    `
+  },
+  2: {
+    title: "Server Maintenance",
+    date: "September 4, 2025",
+    cat: "Maintenance",
+    content: `
+      <p>We are constantly working on stuff expect down time as we work on duels.</p>
+      <p>Follow our Discord for live updates during maintenance.</p>
+    `
+  },
+  3: {
+    title: "Event Coming Soon!",
+    date: "September 5, 2025",
+    cat: "Event",
+    content: `
+      <p>We’re preparing a massive server-wide event. 
+      There will be giveaways, tournament and lobby 3.0 will come out!</p>
+      <p>Check the discord to attend!</p>
+    `
+  }
+};
+
+// Modal
+const modal = document.getElementById("newsModal");
+const modalBody = document.getElementById("modalBody");
+const closeBtn = document.querySelector(".modal-close");
+
+// Open modal
+document.querySelectorAll(".read-more").forEach(btn => {
+  btn.addEventListener("click", e => {
+    e.preventDefault();
+    const articleEl = btn.closest(".news-card");
+    const id = articleEl.getAttribute("data-id");
+    const article = articles[id];
+    modalBody.innerHTML = `
+      <h2>${article.title}</h2>
+      <p style="color:var(--muted); font-size:.9rem;">${article.cat} • ${article.date}</p>
+      ${article.content}
+    `;
+    modal.style.display = "flex";
+  });
+});
+
+// Close modal
+closeBtn.onclick = () => (modal.style.display = "none");
+window.onclick = e => {
+  if (e.target === modal) modal.style.display = "none";
+};
+
+// Auto-sort news by date (newest first)
+const newsGrid = document.querySelector(".news-grid");
+const newsCards = Array.from(newsGrid.children);
+
+newsCards.sort((a, b) => {
+  return new Date(b.getAttribute("data-date")) - new Date(a.getAttribute("data-date"));
+});
+
+newsCards.forEach(card => newsGrid.appendChild(card));
 
 
 
